@@ -1,0 +1,17 @@
+# only let the git user log in, and only with an ssh key
+AllowUsers git
+PasswordAuthentication no
+PermitRootLogin no
+
+# just check for one authorized keys file
+AuthorizedKeysFile .ssh/authorized_keys
+
+# restrict all forwarding
+DisableForwarding yes
+GatewayPorts no
+
+# set the git repo dir in all sessions - this is changed in entrypoint.sh
+SetEnv GIT_REPO_DIR=/home/git/repos
+
+# don't print the welcome message from Alpine
+PrintMotd no

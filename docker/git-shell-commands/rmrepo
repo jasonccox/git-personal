@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# get the repo directory
+if ! repo_dir="`repo-name-to-dir "$1"`"; then
+    echo Repo name missing or invalid
+    exit 1
+fi
+
+# make sure the repo exists and is a git repo
+if ! is-git-repo "$repo_dir"; then
+    echo Repo does not exist
+    exit 1
+fi
+
+# remove the repo
+rm -rf "$repo_dir"

@@ -1,0 +1,8 @@
+#!/bin/sh
+
+CONFIG_NAME=git-personal.mirror
+
+for remote in `git config --get-all "$CONFIG_NAME"`; do
+    echo "Pushing to mirror $remote"
+    git push --mirror "$remote"
+done

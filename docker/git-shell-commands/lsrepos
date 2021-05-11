@@ -1,0 +1,8 @@
+#!/bin/sh
+
+find "$GIT_REPO_DIR" \
+    -type d \
+    -name \*.git \
+    -execdir is-git-repo '{}' \; \
+    -printf %P\\n \
+    | sed 's/.git$//'

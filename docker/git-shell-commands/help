@@ -1,0 +1,10 @@
+#!/bin/sh
+
+echo 'git-personal commands:'
+echo '  help                            Print available commands'
+echo '  mkrepo NAME                     Create a repo NAME'
+echo '  rmrepo NAME                     Remove the repo NAME'
+echo '  lsrepos                         List all repos'
+echo '  mirror NAME REMOTE              Set repo NAME to mirror to REMOTE'
+echo '  mirror -r|--remove NAME REMOTE  Set repo NAME to stop mirroring to REMOTE'
+echo '  mirror -l|--list NAME           List remotes to which repo NAME is mirroring'
