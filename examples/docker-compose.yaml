@@ -1,0 +1,38 @@
+version: '3.2'
+
+services:
+  git-personal:
+    container_name: git-personal
+    image: jasonccox/git-personal
+    restart: always
+    ports:
+      # Forward port 22 to the port of your choosing. This is the port you'll
+      # use to access the server over ssh.
+      - 2222:22/tcp
+
+    volumes:
+      # A volume containing the git repos. This should match the GIT_REPO_DIR
+      # environment variable, if specified. If this is a bind mount, the mounted
+      # directory should be owned by uid and gid 1000.
+      - git-repos:/home/git/repos
+
+      # A volume containing the git server's ssh host keys. If you don't persist
+      # these across restarts, you'll get the nasty "Remote host verification
+      # failed errors" from ssh.
+      - ssh-host-keys:/etc/ssh/host_keys
+
+      # A volume containing an authorized_keys file (to control which ssh keys
+      # can be used to access the server) and an id_rsa/id_rsa.pub ssh key pair
+      # (the ssh key the server will use when mirroring to another server). It's
+      # probably easiest to do this via a bind mount. All of these files should
+      # be owned by uid and gid 1000.
+      - ./git-personal-ssh:/home/git/.ssh
+
+    environment:
+      # Optionally specify what directory the git repos should be stored in on
+      # the server. This is the default.
+      GIT_REPO_DIR: /home/git/repos
+
+volumes:
+  git-repos:
+  ssh-host-keys:

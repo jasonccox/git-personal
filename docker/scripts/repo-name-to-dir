@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# exit on error
+set -e
+
+# make sure a repo name was provided
+[ -n "$1" ] || exit 1
+
+repo_dir="$GIT_REPO_DIR/$1.git"
+
+# make sure the repo name isn't contrived to get out of the git directory
+[ "`realpath --canonicalize-missing "$repo_dir"`" = "$repo_dir" ] || exit 1
+
+echo "$repo_dir"

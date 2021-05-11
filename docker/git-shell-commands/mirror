@@ -1,0 +1,67 @@
+#!/bin/sh
+
+CONFIG_NAME=git-personal.mirror
+
+# parse args
+while [ -n "$1" ]; do
+    case "$1" in
+        -l|--list)
+            cmd=list
+            ;;
+        -r|--remove)
+            cmd=remove
+            ;;
+        *)
+            repo="$1"
+            remote="$2"
+            break
+            ;;
+    esac
+
+    shift
+done
+
+# default to add command
+cmd="${cmd:-add}"
+
+# get the repo directory
+if ! repo_dir="`repo-name-to-dir "$repo"`"; then
+    echo Repo name missing or invalid
+    exit 1
+fi
+
+# make sure the repo exists and is a git repo
+if ! is-git-repo "$repo_dir"; then
+    echo Repo does not exist
+    exit 1
+fi
+
+add() {
+    require_remote
+    git config --add "$CONFIG_NAME" "$remote" || exit 1
+    if ! git push --mirror "$remote"; then
+        echo Pushing to remote failed. This mirror will not be saved.
+        remove
+        exit 1
+    fi
+}
+
+list() {
+    git config --get-all "$CONFIG_NAME"
+}
+
+remove() {
+    require_remote
+    git config --fixed-value --unset "$CONFIG_NAME" "$remote"
+}
+
+require_remote() {
+    if [ -z "$remote" ]; then
+        echo Remote not specified
+        exit 1
+    fi
+}
+
+# run the specified command from the repo
+cd "$repo_dir"
+$cmd

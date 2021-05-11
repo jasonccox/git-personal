@@ -1,0 +1,4 @@
+Host *
+    # don't ask to add new host keys - without this, pushing to a mirror over
+    # ssh fails because there's no stdin
+    StrictHostKeyChecking no

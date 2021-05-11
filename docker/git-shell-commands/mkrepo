@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# get the repo directory
+if ! repo_dir="`repo-name-to-dir "$1"`"; then
+    echo Repo name missing or invalid
+    exit 1
+fi
+
+# make sure the repo doesn't exist yet
+if [ -d "$repo_dir" ]; then
+    echo Repo already exists
+    exit 1
+fi
+
+# create the repo
+set -e
+mkdir -p "$repo_dir"
+cd "$repo_dir"
+git init --bare
