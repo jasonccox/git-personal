@@ -16,21 +16,17 @@ RUN which git-shell >> /etc/shells \
     && adduser --disabled-password --shell $(which git-shell) git \
     && echo git:git | chpasswd
 
-USER git
-WORKDIR /home/git
+# set up needed directories
+RUN mkdir /home/git/.ssh /etc/git \
+    && chown git:git /home/git/.ssh
 
-RUN mkdir .ssh
-
-COPY --chown=git:git git-shell-commands git-shell-commands
-
-COPY --chown=git:git hooks .githooks
-RUN git config --global core.hooksPath ~/.githooks
-
-USER root
-WORKDIR /
+# configure git
+COPY git-shell-commands /etc/git/shell-commands
+COPY hooks /etc/git/hooks
+RUN git config --system core.hooksPath /etc/git/hooks
 
 # set up git directory
-ENV GIT_REPO_DIR=/home/git/repos
+ENV GIT_REPO_DIR=/home/git
 RUN mkdir -p "$GIT_REPO_DIR" \
     && chown git:git "$GIT_REPO_DIR"
 

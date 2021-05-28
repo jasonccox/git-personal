@@ -13,8 +13,9 @@ services:
     volumes:
       # A volume containing the git repos. This should match the GIT_REPO_DIR
       # environment variable, if specified. If this is a bind mount, the mounted
-      # directory should be owned by uid and gid 1000.
-      - git-repos:/home/git/repos
+      # directory should be owned by uid and gid 1000. THIS VOLUME SHOULD ALWAYS
+      # BE SPECIFIED BEFORE ANY VOLUMES MOUNTED INSIDE IT.
+      - git-repos:/home/git
 
       # A volume containing the git server's ssh host keys. If you don't persist
       # these across restarts, you'll get the nasty "Remote host verification
@@ -25,13 +26,15 @@ services:
       # can be used to access the server) and an id_rsa/id_rsa.pub ssh key pair
       # (the ssh key the server will use when mirroring to another server). It's
       # probably easiest to do this via a bind mount. All of these files and the
-      # containing directory should be owned by uid and gid 1000.
+      # containing directory should be owned by uid and gid 1000. (Note that
+      # you could omit this volume since you're already mounting something to
+      # /home/git above.)
       - ./git-personal-ssh:/home/git/.ssh
 
     environment:
       # Optionally specify what directory the git repos should be stored in on
       # the server. This is the default.
-      GIT_REPO_DIR: /home/git/repos
+      GIT_REPO_DIR: /home/git
 
 volumes:
   git-repos:

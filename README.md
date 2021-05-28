@@ -23,7 +23,7 @@ Then you can start the server:
 ```
 $ docker run \
     --publish 2222:22 \
-    --volume git-repos:/home/git/repos \
+    --volume git-repos:/home/git \
     --volume ssh-host-keys:/etc/ssh/host_keys \
     --volume ./git-personal-ssh:/home/git/.ssh \
     jasonccox/git-personal
@@ -53,7 +53,7 @@ mirror -l|--list NAME           List remotes to which repo NAME is mirroring
 
 These commands can also be run directly over ssh, e.g. `ssh -p 2222 git@some.host mkrepo my-repo`. When accessing the server non-interactively like this, a few additional server-side Git commands are also available; see `man git-shell` for more information.
 
-Once you've created a repo, you can interact with it via Git over SSH. By default, repos are created in `/home/git/repos/` on the server.
+Once you've created a repo, you can interact with it via Git over SSH. By default, repos are created in `/home/git/` on the server.
 
 For example, if you had a local repo called `my-repo`, you might do the following to create a repository, push some code to it, and mirror it to GitHub:
 
@@ -63,7 +63,7 @@ $ ssh -p 2222 git@some.host mkrepo my-repo
 
 # add the server repo as a remote and push to it
 $ cd my-repo
-$ git remote add origin ssh://git@some.host:2222/~git/repos/my-repo.git
+$ git remote add origin ssh://git@some.host:2222/~git/my-repo.git
 $ git push -u origin master
 
 # mirror to GitHub (the repo must already exist on GitHub, and your server's SSH
@@ -92,7 +92,7 @@ Host some.host # the hostname you use to access git-personal
     Port 2222  # the port exposed for git-personal
 ```
 
-Notably, this allows you to access the server without the `-p` flag (e.g. `ssh git@some.host` instead of `ssh -p 2222 git@some.host`) and provide scp-style URLs to Git (e.g. `git clone git@some.host:repos/my-repo.git` instead of `git clone ssh://git@some.host:2222/~git/repos/my-repo.git`).
+Notably, this allows you to access the server without the `-p` flag (e.g. `ssh git@some.host` instead of `ssh -p 2222 git@some.host`) and provide scp-style URLs to Git (e.g. `git clone git@some.host:my-repo.git` instead of `git clone ssh://git@some.host:2222/~git/my-repo.git`).
 
 You can even take this one step further and eliminate the need to specify the `git` user by adding `User git` to your SSH config as well.
 
@@ -110,7 +110,7 @@ cool-project
 code/awesome-sauce
 code/web/my-site
 git> exit
-$ git clone ssh://git@some.host:2222/~git/repos/cool-project.git
-$ git clone ssh://git@some.host:2222/~git/repos/code/awesome-sauce.git
-$ git clone ssh://git@some.host:2222/~git/repos/code/web/my-site.git
+$ git clone ssh://git@some.host:2222/~git/cool-project.git
+$ git clone ssh://git@some.host:2222/~git/code/awesome-sauce.git
+$ git clone ssh://git@some.host:2222/~git/code/web/my-site.git
 ```

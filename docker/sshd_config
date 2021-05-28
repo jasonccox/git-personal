@@ -11,7 +11,7 @@ DisableForwarding yes
 GatewayPorts no
 
 # set the git repo dir in all sessions - this is changed in entrypoint.sh
-SetEnv GIT_REPO_DIR=/home/git/repos
+SetEnv GIT_REPO_DIR=/home/git
 
 # don't print the welcome message from Alpine
 PrintMotd no
