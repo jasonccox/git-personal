@@ -35,16 +35,18 @@ if [ -d "$repo_dir" ]; then
     exit 1
 fi
 
-set -e
-
 if [ -n "$from_repo" ]; then
     # create the repo from an existing repo
-    git clone --mirror "$from_repo" "$repo_dir"
-    cd "$repo_dir"
-    git remote remove origin
+    git clone --mirror "$from_repo" "$repo_dir" \
+      && cd "$repo_dir" \
+      && git remote remove origin
 else
     # create a new repo
-    mkdir -p "$repo_dir"
-    cd "$repo_dir"
-    git init --bare
+    mkdir -p "$repo_dir" \
+      && cd "$repo_dir" \
+      && git init --bare
+fi
+
+if [ "$?" -ne 0 ]; then
+    rm -rf "$repo_dir"
 fi

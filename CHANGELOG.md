@@ -7,6 +7,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [Unreleased]
 ### Added
 - `mkrepo --from` now allows creating a repo that is a copy of a remote repo.
+### Fixed
+- Make `mkrepo` clean up after itself if it fails -- no extra directory left.
 
 ## [0.2.0] - 2021-05-27
 ### Changed
