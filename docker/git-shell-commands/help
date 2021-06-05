@@ -3,6 +3,7 @@
 echo 'git-personal commands:'
 echo '  help                            Print available commands'
 echo '  mkrepo NAME                     Create a repo NAME'
+echo '  mkrepo -f|--from REMOTE NAME    Create a repo NAME that is a copy of REMOTE'
 echo '  rmrepo NAME                     Remove the repo NAME'
 echo '  lsrepos                         List all repos'
 echo '  mirror NAME REMOTE              Set repo NAME to mirror to REMOTE'

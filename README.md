@@ -44,6 +44,7 @@ Doing so will drop you into `git-shell` on the server, where a few commands are 
 ```
 help                            Print available commands
 mkrepo NAME                     Create a repo NAME
+mkrepo -f|--from REMOTE NAME    Create a repo NAME that is a copy of REMOTE
 rmrepo NAME                     Remove the repo NAME
 lsrepos                         List all repos
 mirror NAME REMOTE              Set repo NAME to mirror to REMOTE
