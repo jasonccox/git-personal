@@ -1,6 +1,6 @@
 # git-personal
 
-A Docker image for a simple, single-user Git server. Available on [GitHub](https://github.com/jasonccox/git-personal) or as a [pre-built image on Docker Hub](https://hub.docker.com/r/jasonccox/git-personal).
+A Docker image for a simple, single-user Git server. Also available as a [pre-built image on Docker Hub](https://hub.docker.com/r/jasonccox/git-personal).
 
 - Built-in commands to create, list, and delete repos
 - Support for mirroring repos to other Git servers
@@ -56,7 +56,7 @@ These commands can also be run directly over ssh, e.g. `ssh -p 2222 git@some.hos
 
 Once you've created a repo, you can interact with it via Git over SSH. By default, repos are created in `/home/git/` on the server.
 
-For example, if you had a local repo called `my-repo`, you might do the following to create a repository, push some code to it, and mirror it to GitHub:
+For example, if you had a local repo called `my-repo`, you might do the following to create a repository, push some code to it, and mirror it to SourceHut:
 
 ```
 # create the repo on the server
@@ -67,9 +67,9 @@ $ cd my-repo
 $ git remote add origin ssh://git@some.host:2222/~git/my-repo.git
 $ git push -u origin master
 
-# mirror to GitHub (the repo must already exist on GitHub, and your server's SSH
-# key must have access)
-$ ssh -p 2222 git@some.host mirror my-repo git@github.com/me/my-repo.git
+# mirror to SourceHut (the repo must already exist on SourceHut, and your
+# server's SSH key must have access)
+$ ssh -p 2222 git@some.host mirror my-repo git@git.sr.ht:~me/my-repo.git
 ```
 
 ## Customization
